@@ -58,7 +58,7 @@ const About = () => {
                 <br/>
                 <br/>
                 <br/>
-                With a background in Computer Science and Mathematics (18 distinctions and a triple major!) and being a member of the Golden Key International Honour Society, problem-solving is basically my superpower. I’m an AWS Certified Cloud Practitioner and Terraform Practitioner (Advanced), and I’ve been building with AI-assisted tools like Cursor and Claude Code daily since 2022. I’m big on AI, DevOps, and anything that pushes tech forward.
+                With a background in Computer Science and Mathematics (18 distinctions and a triple major!) and being a member of the Golden Key International Honour Society, problem-solving is basically my superpower. I’m an AWS Certified Cloud Practitioner and Terraform Practitioner (Advanced), and I’ve been building with AI-assisted tools daily — starting with ChatGPT in January 2023 and moving to Claude and Cursor in February 2025. I’m big on AI, DevOps, and anything that pushes tech forward.
                 I take pride in my work, always go the extra mile, and I’m constantly learning, experimenting, and building things that make life easier for businesses and communities.
             
               </motion.p>
