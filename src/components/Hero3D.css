@@ -6,6 +6,9 @@
   left: 0;
   opacity: 0.3;
   z-index: 0;
+  /* Decorative background only — never intercept touch/scroll gestures
+     (otherwise OrbitControls swallows vertical swipes on mobile). */
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {

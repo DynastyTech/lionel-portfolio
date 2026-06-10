@@ -7,9 +7,36 @@
 }
 
 @media (max-width: 768px) {
+  .projects {
+    padding: 4rem 1rem;
+  }
+
+  .project-swiper {
+    padding: 1.5rem 0 3.5rem;
+  }
+
   .project-swiper .swiper-slide {
-    width: 300px;
-    margin: 0 0.75rem;
+    width: min(86vw, 330px);
+    margin: 0 0.5rem;
+  }
+
+  /* The centered prev/next arrows overlap the card content on small
+     screens — rely on swipe + pagination dots instead. */
+  .project-swiper .swiper-button-next,
+  .project-swiper .swiper-button-prev {
+    display: none;
+  }
+
+  .project-card-inner {
+    min-height: 400px;
+  }
+
+  .project-card-face {
+    padding: 1.5rem 1.35rem;
+  }
+
+  .project-header h3 {
+    font-size: 1.25rem;
   }
 }
 .projects {

@@ -84,3 +84,25 @@ section {
     scroll-behavior: auto !important;
   }
 }
+
+/* Never allow sideways scroll on small screens */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Mobile: trim the oversized section padding / full-height gaps so content
+   isn't separated by large empty space (each section sets its own padding,
+   so we override here in one place). */
+@media (max-width: 600px) {
+  .about,
+  .skills,
+  .experience,
+  .education,
+  .certifications,
+  .projects,
+  .contact {
+    padding: 3.5rem 1rem !important;
+    min-height: auto !important;
+  }
+}
