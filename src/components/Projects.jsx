@@ -14,23 +14,55 @@ const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [flippedCard, setFlippedCard] = useState(null);
+  const [loadedPreviews, setLoadedPreviews] = useState(() => new Set());
   const flipTimerRef = useRef(null);
 
-  const handleCardEnter = (index) => {
-    clearTimeout(flipTimerRef.current);
-    flipTimerRef.current = setTimeout(() => setFlippedCard(index), 2000);
-  };
-
-  const handleCardLeave = () => {
-    clearTimeout(flipTimerRef.current);
-    setFlippedCard(null);
-  };
+  // Touch devices can't hover, so they tap to flip instead of hovering.
+  const isTouch =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(hover: none)').matches;
 
   const openProjectLink = (url) => {
     if (!url || url === '#') return;
     if (typeof window !== 'undefined') {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
+  };
+
+  // Only load a project's live-preview iframe once its card has been flipped,
+  // so we don't fetch every external site on initial render.
+  const markPreviewLoaded = (index) => {
+    setLoadedPreviews((prev) => {
+      if (prev.has(index)) return prev;
+      const next = new Set(prev);
+      next.add(index);
+      return next;
+    });
+  };
+
+  const handleCardEnter = (index) => {
+    if (isTouch) return;
+    clearTimeout(flipTimerRef.current);
+    flipTimerRef.current = setTimeout(() => {
+      setFlippedCard(index);
+      markPreviewLoaded(index);
+    }, 2000);
+  };
+
+  const handleCardLeave = () => {
+    if (isTouch) return;
+    clearTimeout(flipTimerRef.current);
+    setFlippedCard(null);
+  };
+
+  const handleCardClick = (index, link) => {
+    if (isTouch) {
+      // First tap flips to the preview; tapping again flips back.
+      setFlippedCard((prev) => (prev === index ? null : index));
+      markPreviewLoaded(index);
+      return;
+    }
+    openProjectLink(link);
   };
 
   //testing projects
@@ -184,18 +216,22 @@ const Projects = () => {
                   } ${flippedCard === index ? 'is-flipped' : ''}`}
                   variants={itemVariants}
                   transition={{ duration: 0.3 }}
-                  onClick={() => openProjectLink(project.link)}
+                  onClick={() => handleCardClick(index, project.link)}
                   onKeyDown={(e) => {
-                    if (project.link === '#') return;
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    e.preventDefault();
+                    if (isTouch) {
+                      handleCardClick(index, project.link);
+                    } else {
                       openProjectLink(project.link);
                     }
                   }}
-                  role={project.link !== '#' ? 'button' : 'article'}
-                  tabIndex={project.link !== '#' ? 0 : -1}
+                  role="button"
+                  tabIndex={0}
                   aria-label={
-                    project.link !== '#'
+                    isTouch
+                      ? `Tap to preview ${project.title}`
+                      : project.link !== '#'
                       ? `Open ${project.title} project`
                       : `${project.title} project preview`
                   }
@@ -206,12 +242,24 @@ const Projects = () => {
                         <h3>{project.title}</h3>
                         <div className="project-links">
                           {project.link !== '#' && (
-                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label={`Open ${project.title} live site`}
+                            >
                               <FaExternalLinkAlt />
                             </a>
                           )}
                           {project.github !== '#' && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label={`Open ${project.title} GitHub repo`}
+                            >
                               <FaGithub />
                             </a>
                           )}
@@ -233,7 +281,7 @@ const Projects = () => {
                           <div className="project-preview-frame">
                             <iframe
                               title={`${project.title} preview`}
-                              src={project.link}
+                              src={loadedPreviews.has(index) ? project.link : undefined}
                               loading="lazy"
                               sandbox="allow-same-origin allow-scripts allow-forms"
                               referrerPolicy="no-referrer"

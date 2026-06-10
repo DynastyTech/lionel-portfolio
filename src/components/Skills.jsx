@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   FaCode, FaServer, FaCloud, FaDocker, FaGitAlt,
   FaPython, FaJava, FaNode, FaReact, FaAws
@@ -54,25 +54,47 @@ const Skills = () => {
     const anglePer = 360 / count;
     const radius = Math.round(80 / Math.tan(Math.PI / count)) + 90;
     const speed = reverse ? -0.225 : 0.225;
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const [rotation, setRotation] = useState(0);
+    const rootRef = useRef(null);
+    const stageRef = useRef(null);
     const rotationRef = useRef(0);
     const draggingRef = useRef(false);
-    const pausedRef = useRef(false);
+    const pausedRef = useRef(false);   // paused on hover
+    const visibleRef = useRef(true);   // paused when scrolled off-screen
     const lastXRef = useRef(0);
 
+    // Drive rotation by mutating the transform directly (no React re-render per frame).
     useEffect(() => {
       let raf;
       const tick = () => {
-        if (!draggingRef.current && !pausedRef.current) {
+        if (!prefersReduced && visibleRef.current && !draggingRef.current && !pausedRef.current) {
           rotationRef.current += speed;
-          setRotation(rotationRef.current);
+          if (stageRef.current) {
+            stageRef.current.style.transform = `translateZ(-${radius}px) rotateY(${rotationRef.current}deg)`;
+          }
         }
         raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
       return () => cancelAnimationFrame(raf);
-    }, [speed]);
+    }, [speed, radius, prefersReduced]);
+
+    // Skip the loop's work entirely while the carousel is out of view.
+    useEffect(() => {
+      const el = rootRef.current;
+      if (!el || typeof IntersectionObserver === 'undefined') return;
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          visibleRef.current = entry.isIntersecting;
+        },
+        { threshold: 0 }
+      );
+      io.observe(el);
+      return () => io.disconnect();
+    }, []);
 
     const handlePointerDown = (e) => {
       draggingRef.current = true;
@@ -85,7 +107,9 @@ const Skills = () => {
       const dx = e.clientX - lastXRef.current;
       lastXRef.current = e.clientX;
       rotationRef.current += dx * 0.4;
-      setRotation(rotationRef.current);
+      if (stageRef.current) {
+        stageRef.current.style.transform = `translateZ(-${radius}px) rotateY(${rotationRef.current}deg)`;
+      }
     };
 
     const endDrag = () => {
@@ -94,6 +118,7 @@ const Skills = () => {
 
     return (
       <div
+        ref={rootRef}
         className="skills-carousel"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -106,8 +131,9 @@ const Skills = () => {
         }}
       >
         <div
+          ref={stageRef}
           className="carousel-stage"
-          style={{ transform: `translateZ(-${radius}px) rotateY(${rotation}deg)` }}
+          style={{ transform: `translateZ(-${radius}px) rotateY(0deg)` }}
         >
           {skills.map((skill, index) => (
             <div

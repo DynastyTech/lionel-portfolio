@@ -1,7 +1,11 @@
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import Hero3D from './Hero3D';
 import './Hero.css';
+
+// Code-split the 3D canvas (three.js stack) so it loads after first paint
+// instead of blocking the initial bundle.
+const Hero3D = lazy(() => import('./Hero3D'));
 
 const Hero = () => {
   const containerVariants = {
@@ -26,7 +30,9 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero">
-      <Hero3D />
+      <Suspense fallback={null}>
+        <Hero3D />
+      </Suspense>
       <div className="hero-content">
         <motion.div
           className="hero-text"
@@ -40,9 +46,6 @@ const Hero = () => {
           <motion.h2 variants={itemVariants} className="hero-subtitle">
             Platform Engineer at IBM | Software Engineer | DevOps Enabled
           </motion.h2>
-          <motion.p variants={itemVariants} className="hero-description">
-              
-          </motion.p>
           <motion.div
             variants={itemVariants}
             className="hero-buttons"

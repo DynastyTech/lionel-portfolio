@@ -3,17 +3,25 @@ import { OrbitControls, Sphere, MeshDistortMaterial, Float } from '@react-three/
 import { useTheme } from '../context/ThemeContext';
 import './Hero3D.css';
 
+const prefersReduced =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const AnimatedSphere = () => {
   const { theme } = useTheme();
-  
+
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
+    <Float
+      speed={prefersReduced ? 0 : 2}
+      rotationIntensity={prefersReduced ? 0 : 1}
+      floatIntensity={prefersReduced ? 0 : 2}
+    >
       <Sphere args={[1, 100, 200]} scale={2}>
         <MeshDistortMaterial
           color={theme === 'dark' ? '#667eea' : '#764ba2'}
           attach="material"
-          distort={0.5}
-          speed={2}
+          distort={prefersReduced ? 0 : 0.5}
+          speed={prefersReduced ? 0 : 2}
           roughness={0.1}
           metalness={0.8}
         />
@@ -30,7 +38,7 @@ const Hero3D = () => {
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <pointLight position={[-10, -10, -5]} intensity={0.5} />
         <AnimatedSphere />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
+        <OrbitControls enableZoom={false} autoRotate={!prefersReduced} autoRotateSpeed={2} />
       </Canvas>
     </div>
   );
