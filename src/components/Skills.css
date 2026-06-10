@@ -15,8 +15,9 @@
 
 .skill-category h3 {
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   opacity: 0.9;
+  text-align: center;
 }
 
 [data-theme='dark'] .skill-category h3 {
@@ -85,6 +86,159 @@
   transition: all 0.1s ease;
   cursor: pointer;
   min-width: 160px;
+}
+
+/* 3D carousel */
+.skills-carousel {
+  position: relative;
+  height: 320px;
+  perspective: 1200px;
+  margin: 0.75rem 0;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.skills-carousel:active {
+  cursor: grabbing;
+}
+
+.carousel-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160px;
+  height: 180px;
+  margin-left: -80px;
+  margin-top: -90px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.carousel-card {
+  position: absolute;
+  inset: 0;
+  width: 160px;
+  height: 180px;
+  transform-style: preserve-3d;
+  user-select: none;
+}
+
+.card-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 14px;
+}
+
+/* front / back: full card face (depth = 28px, so ±14px) */
+.card-front,
+.card-back {
+  width: 160px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.card-front {
+  transform: translate(-50%, -50%) translateZ(14px);
+}
+
+.card-back {
+  transform: translate(-50%, -50%) translateZ(-14px) rotateY(180deg);
+}
+
+/* left / right edges (width = depth) */
+.card-left,
+.card-right {
+  width: 28px;
+  height: 180px;
+  border-radius: 0;
+}
+
+.card-right {
+  transform: translate(-50%, -50%) rotateY(90deg) translateZ(80px);
+}
+
+.card-left {
+  transform: translate(-50%, -50%) rotateY(-90deg) translateZ(80px);
+}
+
+/* top / bottom edges (height = depth) */
+.card-top,
+.card-bottom {
+  width: 160px;
+  height: 28px;
+  border-radius: 0;
+}
+
+.card-top {
+  transform: translate(-50%, -50%) rotateX(90deg) translateZ(90px);
+}
+
+.card-bottom {
+  transform: translate(-50%, -50%) rotateX(-90deg) translateZ(90px);
+}
+
+/* soft ground shadow below each card that rotates with it */
+.card-shadow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 120px;
+  filter: blur(8px);
+  transform: translate(-50%, -50%) rotateX(-90deg) translateZ(105px);
+  pointer-events: none;
+}
+
+[data-theme='dark'] .card-shadow {
+  background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.45) 0%, rgba(102, 126, 234, 0) 65%);
+}
+
+[data-theme='light'] .card-shadow {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 65%);
+}
+
+/* solid (opaque) faces */
+[data-theme='dark'] .card-face {
+  background: #232a4d;
+  border: 1px solid rgba(102, 126, 234, 0.45);
+}
+
+[data-theme='light'] .card-face {
+  background: #ece6f7;
+  border: 1px solid rgba(118, 75, 162, 0.45);
+}
+
+/* edges darker to read as thickness */
+[data-theme='dark'] .card-left,
+[data-theme='dark'] .card-right,
+[data-theme='dark'] .card-top,
+[data-theme='dark'] .card-bottom {
+  background: #161b33;
+}
+
+[data-theme='light'] .card-left,
+[data-theme='light'] .card-right,
+[data-theme='light'] .card-top,
+[data-theme='light'] .card-bottom {
+  background: #cdbfe6;
+}
+
+[data-theme='dark'] .card-front span {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='light'] .card-front span {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.card-front span {
+  font-weight: 500;
+  text-align: center;
 }
 
 [data-theme='dark'] .skill-item {

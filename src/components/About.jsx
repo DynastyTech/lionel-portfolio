@@ -28,8 +28,8 @@ const About = () => {
   };
 
   const hobbies = [
-    { icon: <FaBrain />, text: 'Learning new things daily' },
-    { icon: <FaMusic />, text: 'Deejaying occasionally' },
+    { icon: <FaBrain />, text: 'Learning new things tech daily' },
+    { icon: <FaMusic />, text: 'Deejaying & socializing occasionally' },
     { icon: <FaHeart />, text: 'Helping others grow' },
     { icon: <FaChess />, text: 'Mathematics & problem solving' },
   ];
@@ -52,13 +52,13 @@ const About = () => {
                 variants={itemVariants}
                 className="about-description"
               >
-                I’m a Platform Engineer Intern at IBM who loves working with Hybrid Cloud, OpenShift, Kubernetes, Terraform, and all things automation. 
-                I build full-stack and mobile apps, modernize outdated systems, and enjoy turning ideas into real, production-ready solutions. 
+                I’m a Platform Engineer at IBM with 5+ years of professional experience building and shipping full-stack and cloud-native software.
+                By day I work with Hybrid Cloud, OpenShift, Kubernetes, Terraform, and CI/CD automation; alongside that I design full-stack web and mobile apps with React, Angular, Node.js, Java, and Flutter, modernize legacy systems, and turn ideas into real, production-ready solutions.
 
                 <br/>
                 <br/>
                 <br/>
-                With a background in Computer Science and Mathematics (18 distinctions!) and being a memeber of the Golden Key International Honour Society, problem-solving is basically my superpower. I’m big on AI, Web3, DevOps, and anything that pushes tech forward. 
+                With a background in Computer Science and Mathematics (18 distinctions and a triple major!) and being a member of the Golden Key International Honour Society, problem-solving is basically my superpower. I’m an AWS Certified Cloud Practitioner and Terraform Practitioner (Advanced), and I’ve been building with AI-assisted tools like Cursor and Claude Code daily since 2022. I’m big on AI, DevOps, and anything that pushes tech forward.
                 I take pride in my work, always go the extra mile, and I’m constantly learning, experimenting, and building things that make life easier for businesses and communities.
             
               </motion.p>

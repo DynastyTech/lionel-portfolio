@@ -10,32 +10,46 @@ const Experience = () => {
 
   const experiences = [
     {
-      title: 'Platform Engineer Intern',
-      company: 'IBM',
+      title: 'Platform Engineer',
+      company: 'IBM South Africa',
       period: 'May 2025 - Current',
-      description: 'Working with Hybrid Cloud, containerized application deployment, and automation. Skilled in RedHat OpenShift, Kubernetes, Terraform, and Ansible. Working with Standard Bank, Nedbank, FRG, and Ethio Telecom to develop document processing dashboards, infuse AI, and develop analytics dashboards.',
-      technologies: ['OpenShift', 'Kubernetes', 'Terraform', 'Ansible', 'DevOps', 'AI Integration']
+      description: 'Built AI-driven analytics dashboards for a telecom client in Ethiopia to support drive-test analytics and network optimisation, and developed a document-processing pilot for major South African banks (Nedbank, FNB, SARB, Standard Bank) focused on automation and data extraction. Provisioned and managed IBM Cloud infrastructure with Terraform (IaC) and enabled hybrid-cloud connectivity via IBM Satellite Connect, collaborating with Solution Architects and senior AI, Data, and Software Engineers.',
+      technologies: ['OpenShift', 'Kubernetes', 'Terraform', 'Ansible', 'IBM Cloud', 'AI Integration']
+    },
+    {
+      title: 'AI Software Engineer (Freelance)',
+      company: 'Marisa Peer',
+      period: 'Feb 2026 - Apr 2026',
+      description: 'Delivered focused AI engineering for an internationally recognised wellness and personal-development brand. Built and integrated AI-assisted tools using modern LLM APIs (OpenAI, Anthropic) to support content and operational workflows, shipping quickly on tight timelines. Ran concurrently with my full-time role at IBM.',
+      technologies: ['OpenAI', 'Anthropic', 'LLM APIs', 'AI Integration', 'Cursor', 'Claude Code']
+    },
+    {
+      title: 'Freelance Software Engineer',
+      company: 'DynastyTech Solutions',
+      period: '2021 - Current',
+      description: 'Build and ship production software for clients in parallel with full-time roles — end-to-end websites, internal tools, and AI-integrated applications. Designed and developed Munsoft\'s live website (munsoft.co.za) and ongoing internal tools, originated through a self-pitched on-site prototype.',
+      technologies: ['React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'AWS']
     },
     {
       title: 'Junior Software Engineer',
       company: 'MG-Consulting Engineers PTY LTD',
       period: 'Feb 2025 - May 2025',
-      description: 'Built site inspection mobile app to automate site inspection, with AI integrated to produce reports.',
-      technologies: ['AI Integration', 'Mobile Application Development', 'Automation']
+      description: 'Designed and built a full-stack site-inspection platform to automate field inspections and reporting. Built a responsive React frontend and Node.js/REST backend, integrated AI-assisted report generation to cut manual reporting time, and containerised services for cloud-native deployment within an Agile team.',
+      technologies: ['React', 'Node.js', 'REST APIs', 'AI Integration', 'CI/CD', 'Appwrite']
     },
     {
-      title: 'Junior Software Engineer',
+      title: 'Full-Stack Java Developer',
       company: 'Amari Health',
-      period: 'Mar 2023 - Sep 2024',
-      description: 'Building and maintaining the company\'s website and mobile app.',
-      technologies: ['Mobile Application Development', 'Web development', 'Testing', 'UI/UX Design','React Native', 'React', 'Node.js', 'MongoDB']
+      period: 'Feb 2023 - Nov 2024',
+      description: 'Designed and developed full-stack Java applications and internal tools supporting Amari Health\'s wellness platform over a 22-month engagement. Built robust Java backend services with modern frontend interfaces, integrating internal systems and third-party APIs, while applying AI-assisted workflows to accelerate delivery — in parallel with my final years of BSc studies.',
+      technologies: ['Java', 'React Native', 'React', 'Node.js', 'MongoDB', 'UI/UX Design']
     },
     {
       title: 'Software Dev Vac Work',
       company: 'Polymorph Systems',
       period: 'Dec 2022 - Jan 2023',
-      description: 'Built a project management dashboard (Full-stack) for the company.',
-      technologies: ['Full Stack', 'React', 'Node.js', 'Database']
+      description: 'Built a full-stack project-management dashboard for internal company operations. Developed Angular / Angular Material frontend components and backend logic using AWS Lambda, DynamoDB, and EC2 — the first professional environment where I adopted AI-assisted coding in my daily workflow.',
+      technologies: ['Angular', 'AWS Lambda', 'DynamoDB', 'EC2', 'Full Stack']
     },
     {
       title: 'Mathematics Tutor',
@@ -54,15 +68,15 @@ const Experience = () => {
     {
       title: 'Full Stack Web Developer',
       company: 'Umuzi.org',
-      period: 'Oct 2020 – May 2021',
-      description: 'Learning and building full stack web applications',
-      technologies: ['Business Intelligence', 'Data Analysis', 'SQL', 'React', 'Node.js', 'MongoDB','Full Stack Development','HTML','CSS','JavaScript','Jasmine s']
+      period: 'Aug 2020 – Apr 2021',
+      description: 'Started my professional software engineering career on Umuzi.org\'s intensive work-readiness programme. Built full-stack web applications in JavaScript, React, Node.js, and Git-based workflows, and was selected on performance for placement at Sanlam Investments.',
+      technologies: ['React', 'Node.js', 'JavaScript', 'HTML', 'CSS', 'Full Stack Development']
     },
     {
       title: 'BI Learnership',
       company: 'Sanlam Investments / Umuzi.org',
       period: 'Nov 2020 – Apr 2021',
-      description: 'Business Intelligence intern at Sanlam investments, through Umuzi.org as a recruit.',
+      description: 'Business Intelligence at Sanlam investments, through Umuzi.org as a recruit.',
       technologies: ['Business Intelligence', 'Data Analysis', 'SQL']
     },
   ];

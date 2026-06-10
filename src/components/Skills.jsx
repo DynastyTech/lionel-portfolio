@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   FaCode, FaServer, FaCloud, FaDocker, FaGitAlt,
   FaPython, FaJava, FaNode, FaReact, FaAws
@@ -49,8 +49,92 @@ const Skills = () => {
     { name: 'Linux', icon: <FaServer /> },
   ];
 
+  const SkillCarousel = ({ skills, reverse = false }) => {
+    const count = skills.length;
+    const anglePer = 360 / count;
+    const radius = Math.round(80 / Math.tan(Math.PI / count)) + 90;
+    const speed = reverse ? -0.225 : 0.225;
+
+    const [rotation, setRotation] = useState(0);
+    const rotationRef = useRef(0);
+    const draggingRef = useRef(false);
+    const pausedRef = useRef(false);
+    const lastXRef = useRef(0);
+
+    useEffect(() => {
+      let raf;
+      const tick = () => {
+        if (!draggingRef.current && !pausedRef.current) {
+          rotationRef.current += speed;
+          setRotation(rotationRef.current);
+        }
+        raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(raf);
+    }, [speed]);
+
+    const handlePointerDown = (e) => {
+      draggingRef.current = true;
+      lastXRef.current = e.clientX;
+      e.currentTarget.setPointerCapture?.(e.pointerId);
+    };
+
+    const handlePointerMove = (e) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - lastXRef.current;
+      lastXRef.current = e.clientX;
+      rotationRef.current += dx * 0.4;
+      setRotation(rotationRef.current);
+    };
+
+    const endDrag = () => {
+      draggingRef.current = false;
+    };
+
+    return (
+      <div
+        className="skills-carousel"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onMouseEnter={() => (pausedRef.current = true)}
+        onMouseLeave={() => {
+          pausedRef.current = false;
+          endDrag();
+        }}
+      >
+        <div
+          className="carousel-stage"
+          style={{ transform: `translateZ(-${radius}px) rotateY(${rotation}deg)` }}
+        >
+          {skills.map((skill, index) => (
+            <div
+              key={skill.name}
+              className="carousel-card"
+              style={{ transform: `rotateY(${index * anglePer}deg) translateZ(${radius}px)` }}
+            >
+              <div className="card-face card-front">
+                <div className="skill-icon">{skill.icon}</div>
+                <span>{skill.name}</span>
+              </div>
+              <div className="card-face card-back" />
+              <div className="card-face card-left" />
+              <div className="card-face card-right" />
+              <div className="card-face card-top" />
+              <div className="card-face card-bottom" />
+              <div className="card-shadow" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   const SkillCategory = ({ title, skills, direction = 'wave' }) => {
     const isMarquee = direction === 'left' || direction === 'right';
+    const isCarousel = direction === 'carousel' || direction === 'carousel-reverse';
 
     const renderSkillCard = (skill, index, keySuffix = '') => {
       const baseDelay = Math.min(index * 0.05, 0.5);
@@ -101,7 +185,9 @@ const Skills = () => {
         transition={{ duration: 0.5 }}
       >
         <h3>{title}</h3>
-        {isMarquee ? (
+        {isCarousel ? (
+          <SkillCarousel skills={skills} reverse={direction === 'carousel-reverse'} />
+        ) : isMarquee ? (
           <div className={`skills-marquee marquee-${direction}`}>
             <div className="marquee-track">
               {marqueeItems.map((skill, index) =>
@@ -130,9 +216,9 @@ const Skills = () => {
           Skills
         </motion.h2>
         <div className="skills-content">
-          <SkillCategory title="Front-End" skills={frontendSkills} direction='left' />
-          <SkillCategory title="Back-End" skills={backendSkills} direction='right' />
-          <SkillCategory title="DevOps & Cloud" skills={devopsSkills} direction="wave" />
+          <SkillCategory title="Frontend" skills={frontendSkills} direction='carousel-reverse' />
+          <SkillCategory title="Backend" skills={backendSkills} direction='carousel' />
+          <SkillCategory title="DevOps & Cloud" skills={devopsSkills} direction="carousel-reverse" />
         </div>
       </div>
     </section>

@@ -1,18 +1,98 @@
+[data-theme='light'] .project-swiper .swiper-pagination-bullet-active {
+  background: #764ba2;
+}
+
+.project-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .project-swiper .swiper-slide {
+    width: 300px;
+    margin: 0 0.75rem;
+  }
+}
 .projects {
   padding: 6rem 2rem;
   min-height: 100vh;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+.projects-carousel-wrapper {
+  position: relative;
+}
+
+.project-swiper {
+  padding: 2rem 0 4rem;
+}
+
+.project-swiper .swiper-slide {
+  width: 380px;
+  height: auto;
+  margin: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.project-swiper .swiper-slide:hover,
+.project-swiper .swiper-slide.swiper-slide-active {
+  z-index: 100;
+}
+
+.project-swiper .swiper-slide-shadow-left,
+.project-swiper .swiper-slide-shadow-right {
+  pointer-events: none !important;
+  opacity: 0.25;
+  display: none;
+}
+
+.project-swiper .swiper-button-next,
+.project-swiper .swiper-button-prev {
+  color: #667eea;
+  background: rgba(0, 0, 0, 0.4);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='light'] .project-swiper .swiper-button-next,
+[data-theme='light'] .project-swiper .swiper-button-prev {
+  color: #764ba2;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.project-swiper .swiper-button-next:after,
+.project-swiper .swiper-button-prev:after {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.project-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 0.5;
+}
+
+.project-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #667eea;
+}
+
+[data-theme='light'] .project-swiper .swiper-pagination-bullet {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='light'] .project-swiper .swiper-pagination-bullet-active {
+  background: #764ba2;
 }
 
 .project-card {
   perspective: 1600px;
-  border-radius: 10px;
+  border-radius: 5px;
   transition: transform 0.3s ease;
+  position: relative;
+  pointer-events: auto;
+  width: 100%;
+  height: 100%;
 }
 
 .project-card-clickable {
@@ -32,7 +112,7 @@
   position: relative;
   width: 100%;
   min-height: 430px;
-  border-radius: 100px;
+  border-radius: 5px;
   transition: transform 0.8s ease;
   transform-style: preserve-3d;
   border: 1px solid transparent;
@@ -44,13 +124,25 @@
   background: rgba(118, 75, 162, 0.08);
 }
 
-.project-card:hover .project-card-inner {
+.project-swiper .swiper-slide-active .project-card-inner {
+  background: rgba(15, 18, 40, 0.95);
+  border-color: rgba(102, 126, 234, 0.8);
+  box-shadow: 0 30px 60px rgba(18, 18, 40, 0.55);
+}
+
+[data-theme='light'] .project-swiper .swiper-slide-active .project-card-inner {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(118, 75, 162, 0.8);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.project-card.is-flipped .project-card-inner {
   transform: rotateY(180deg);
   box-shadow: 0 25px 50px rgba(102, 126, 234, 0.25);
   border-color: rgba(102, 126, 234, 0.6);
 }
 
-[data-theme='light'] .project-card:hover .project-card-inner {
+[data-theme='light'] .project-card.is-flipped .project-card-inner {
   box-shadow: 0 25px 50px rgba(118, 75, 162, 0.25);
   border-color: rgba(118, 75, 162, 0.6);
 }
@@ -58,8 +150,8 @@
 .project-card-face {
   position: absolute;
   inset: 0;
-  padding: 2rem;
-  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  border-radius: 5px;
   backface-visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -159,7 +251,7 @@
 
 .project-preview-frame {
   flex: 1;
-  border-radius: 15px;
+  border-radius: 5px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
@@ -174,7 +266,7 @@
 
 .project-nda {
   flex: 1;
-  border-radius: 15px;
+  border-radius: 5px;
   border: 1px dashed rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
@@ -200,11 +292,5 @@
 [data-theme='light'] .project-nda {
   border-color: rgba(0, 0, 0, 0.2);
   background: rgba(255, 255, 255, 0.7);
-}
-
-@media (max-width: 768px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
